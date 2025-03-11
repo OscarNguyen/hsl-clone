@@ -1,13 +1,20 @@
+# Use version 3.4 of the docker compose file
 version: "3.4"
 
+# Define the services
 services:
+  # Define the corsearch-assignment service
   corsearch-assignment:
+    # Define the image name
     image: corsearch-assignment
+    # Define the build context
     build:
       context: .
+      # Define the dockerfile
       dockerfile: ./Dockerfile
+    # Define the environment variables
     environment:
       NODE_ENV: production
-
+      # Define the port mapping
     ports:
       - 3000:3000

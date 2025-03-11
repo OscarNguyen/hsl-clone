@@ -1,92 +1,154 @@
+# Use the docker image workflow
 name: Docker Image CI
 
+# Run the workflow on push or pull request to the master branch
 on:
   push:
     branches: ["master"]
   pull_request:
     branches: ["master"]
 
+# Define the environment variables
 env:
   VITE_DIGITRANSIT_SUBSCRIPTION_KEY: ${{ secrets.VITE_DIGITRANSIT_SUBSCRIPTION_KEY }}
   VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
 
+# Define the jobs
 jobs:
+  # Define the build job
   build:
     runs-on: ubuntu-latest
+
+    # Define the permissions
     permissions:
+      # Define the contents permission
       contents: read
+      # Define the packages permission
       packages: write
+
+    # Define the outputs
     outputs:
+      # Define the image name
       image_name: ${{ steps.meta.outputs.tags }}
 
+    # Define the steps
     steps:
+      # Define the checkout step
       - uses: actions/checkout@v4
 
+      # Define the login step
       - name: Log in to GitHub Container Registry
+        # Use the docker login action
         uses: docker/login-action@v3
         with:
+          # Define the registry
           registry: ghcr.io
+          # Define the username
           username: ${{ github.actor }}
+          # Define the password
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Define the metadata step
       - name: Extract metadata
+        # Define the id
         id: meta
+        # Use the docker metadata action
         uses: docker/metadata-action@v5
+        # Define the images
         with:
           images: ghcr.io/${{ github.repository }}
 
+      # Define the build step
       - name: Build Docker image
+
         uses: docker/build-push-action@v5
+
+        # Define the build arguments
         with:
+          # Define the context
           context: .
+          # Define the push
           push: false
+          # Define the load
           load: true
+          # Define the tags
           tags: ${{ steps.meta.outputs.tags }}
+          # Define the build arguments
           build-args: |
             VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.VITE_DIGITRANSIT_SUBSCRIPTION_KEY }}
             VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
 
+  # Define the test job
   test:
+    # Define the runs on
     runs-on: ubuntu-latest
+    # Define the needs
     needs: build
 
+    # Define the steps
     steps:
+      # Define the checkout step
       - uses: actions/checkout@v4
 
+      # Define the setup node step
       - name: Set up Node.js
+        # Use the setup node action
         uses: actions/setup-node@v3
+        # Define the node version
         with:
           node-version: "18"
+          # Define the cache
           cache: "npm"
 
+      # Define the install dependencies step
       - name: Install dependencies
+        # Define the run
         run: npm ci
 
+      # Define the run tests step
       - name: Run tests
+        # Define the run
         run: npm test
 
+  # Define the deploy job
   deploy:
+    # Define the runs on
     runs-on: ubuntu-latest
+    # Define the needs
     needs: [build, test]
+    # Define the permissions
     permissions:
+      # Define the contents permission
       contents: read
+      # Define the packages permission
       packages: write
 
     steps:
+      # Define the checkout step
       - uses: actions/checkout@v4
 
+      # Define the login step
       - name: Log in to GitHub Container Registry
+        # Use the docker login action
         uses: docker/login-action@v3
         with:
+          # Define the registry
           registry: ghcr.io
+          # Define the username
           username: ${{ github.actor }}
+          # Define the password
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Define the build and push Docker image step
       - name: Build and push Docker image
+        # Use the docker build and push action
         uses: docker/build-push-action@v5
         with:
+          # Define the context
           context: .
+          # Define the push
           push: true
+          # Define the build arguments
           build-args: |
             VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.VITE_DIGITRANSIT_SUBSCRIPTION_KEY }}
             VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
