@@ -5,7 +5,7 @@ import styles from "../styles/index.module.scss";
 
 const CustomCircularProgress = () => (
   <Box className={styles.circularProgressContainer}>
-    <CircularProgress className={styles.circularProgress} />
+    <CircularProgress color="info" className={styles.circularProgress} />
   </Box>
 );
 
