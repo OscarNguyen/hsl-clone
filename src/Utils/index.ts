@@ -10,7 +10,7 @@ export const formatTimestamp = (timestamp: number | string) => {
   if (typeof timestamp === "number") {
     const date = new Date(timestamp);
 
-    return date.toLocaleTimeString("fi-FI", localTimeOptions);
+    return date.toLocaleTimeString("en-FI", localTimeOptions);
   }
 
   // If timestamp is a string ISO
