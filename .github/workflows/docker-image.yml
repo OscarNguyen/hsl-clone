@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: ["master"]
 
-env:
-  VITE_DIGITRANSIT_SUBSCRIPTION_KEY: ${{ secrets.DIGITRANSIT_SUBSCRIPTION_KEY }}
-  VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,8 +13,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      tags: ${{ steps.meta.outputs.tags }}
-      labels: ${{ steps.meta.outputs.labels }}
+      image_name: ${{ steps.meta.outputs.tags }}
 
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +54,6 @@ jobs:
           context: .
           push: true
           build-args: |
-            VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.DIGITRANSIT_SUBSCRIPTION_KEY }}
-            VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          tags: ${{ needs.build.outputs.tags }}
-          labels: ${{ needs.build.outputs.labels }}
+            VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.VITE_DIGITRANSIT_SUBSCRIPTION_KEY }}
+            VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
+          tags: ${{ needs.build.outputs.image_name }}
