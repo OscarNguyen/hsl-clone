@@ -271,6 +271,7 @@ const useMapBox = () => {
   }, [coordinates]);
 
   return {
+    mapLoaded: mapRef.current?.mapLoaded,
     mapContainerRef,
     mapRef,
     coordinates,
