@@ -16,6 +16,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      tags: ${{ steps.meta.outputs.tags }}
+      labels: ${{ steps.meta.outputs.labels }}
 
     steps:
       - uses: actions/checkout@v4
@@ -41,13 +44,22 @@ jobs:
       packages: write
 
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-        push: true
-        build-args: |
-          VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.DIGITRANSIT_SUBSCRIPTION_KEY }}
-          VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          build-args: |
+            VITE_DIGITRANSIT_SUBSCRIPTION_KEY=${{ secrets.DIGITRANSIT_SUBSCRIPTION_KEY }}
+            VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}
+          tags: ${{ needs.build.outputs.tags }}
+          labels: ${{ needs.build.outputs.labels }}
