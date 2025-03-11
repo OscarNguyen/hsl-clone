@@ -7,6 +7,21 @@ export type TicketType = {
   __typename: string;
 };
 
+export type AlertType = {
+  id: string;
+  __typename: string;
+  alertCause: string;
+  alertDescriptionText: string;
+  alertEffect: string;
+  alertHash: number;
+  alertHeaderText: string;
+  alertSeverityLevel: string;
+  alertUrl: string;
+  effectiveEndDate: number;
+  effectiveStartDate: number;
+  feed: string;
+};
+
 export enum Modes {
   BUS = "BUS",
   TRAM = "TRAM",
