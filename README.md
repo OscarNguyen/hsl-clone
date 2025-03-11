@@ -6,6 +6,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Deploy on Vercel
 
+https://corsearch-assignment.vercel.app/
+
 ## Approach explanation
 
 - create react app with typescript template by using npx create-react-app [app-name] --template typescript
