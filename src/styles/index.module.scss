@@ -38,3 +38,39 @@
   width: 100% !important;
   height: 100% !important;
 }
+
+.mapPageContainer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.toolbar {
+  gap: 0.5rem;
+  justify-content: end;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.mapContainer {
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  width: 100%;
+  height: calc(
+    100vh - 64px
+  ); // Adjust the height by subtracting the height of the header
+}
+
+.planConnectionDialogTitle {
+  background-color: $primary-color;
+  margin-bottom: 1rem !important;
+  color: $white-color-1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.closePlanConnectionDialogButton {
+  color: $white-color-1;
+}
