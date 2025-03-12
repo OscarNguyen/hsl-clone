@@ -10,7 +10,7 @@ export type TicketType = {
 };
 
 export type mapHookProps = {
-  mapLoaded: () => boolean;
+  mapLoaded: boolean;
   mapContainerRef: React.RefObject<HTMLDivElement>;
   mapRef: React.RefObject<Map<string, any>>;
   coordinates: any[];

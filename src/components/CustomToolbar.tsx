@@ -54,7 +54,7 @@ const CustomToolbar = ({
 
   useEffect(() => {
     // when the map is loaded, fetch routes data
-    if (mapLoaded() && !routesData && !routesLoading) {
+    if (mapLoaded && !routesData && !routesLoading) {
       getRoutesQuery({ variables: { lang: "en" } });
     }
   }, [mapLoaded, routesData, routesLoading, getRoutesQuery]);
@@ -62,7 +62,7 @@ const CustomToolbar = ({
   useEffect(() => {
     if (!mapContainerRef.current) return;
 
-    if (mapLoaded()) {
+    if (mapLoaded) {
       // If the filter is NONE, do nothing
       if (filter === Modes.NONE) return;
 
@@ -78,7 +78,7 @@ const CustomToolbar = ({
           });
       }
     }
-  }, [routesData, routesLoading, filter]);
+  }, [routesData, routesLoading, filter, mapLoaded]);
 
   return (
     <Toolbar className={styles.toolbar}>
@@ -87,7 +87,7 @@ const CustomToolbar = ({
         className={styles.filterButton}
         variant="contained"
         onClick={onClickFilter}
-        disabled={routesLoading}
+        disabled={!routesData}
       >
         <FilterAltIcon />
         <Typography>Filter route by</Typography>

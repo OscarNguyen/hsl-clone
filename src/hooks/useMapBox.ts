@@ -17,6 +17,7 @@ const useMapBox = () => {
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   const [filter, setFilter] = useState(Modes.NONE);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [openFilterMenu, setOpenFilterMenu] = useState(false);
 
   const [coordinates, setCoordinates] = useState<
@@ -209,8 +210,10 @@ const useMapBox = () => {
     mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     mapRef.current?.on("load", () => {
-      // loaded property is not reliable, so we need to use a custom property
-      mapRef.current!.mapLoaded = true;
+      if (mapRef.current) {
+        // loaded property is not reliable, so we need to use a custom property
+        setMapLoaded(true);
+      }
     });
 
     // add click event to the map
@@ -269,7 +272,7 @@ const useMapBox = () => {
   }, [coordinates]);
 
   return {
-    mapLoaded: () => mapRef.current?.mapLoaded,
+    mapLoaded,
     mapContainerRef,
     mapRef,
     coordinates,

@@ -20,6 +20,7 @@ export default function MapPage() {
       // Don't refetch routes data automatically
       pollInterval: 0,
     });
+
   const mapHookProps = useMapBox();
 
   return (
@@ -35,7 +36,7 @@ export default function MapPage() {
 
       {/* Rendering loading indicator */}
       {routesLoading && <CustomCircularProgress />}
-      {!mapHookProps.mapLoaded() && <CustomCircularProgress />}
+      {!mapHookProps.mapLoaded && <CustomCircularProgress />}
 
       {/* Rendering map */}
       <Box ref={mapHookProps.mapContainerRef} className={styles.mapContainer} />
