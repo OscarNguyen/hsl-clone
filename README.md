@@ -10,19 +10,31 @@ https://corsearch-assignment.vercel.app/
 
 ## Approach explanation
 
-- create react app with typescript template by using npx create-react-app [app-name] --template typescript
-- install apollo client by using npm install @apollo/client graphql
-- setup apollo client by using ApolloProvider in index.tsx
-- create graphql query by using gql from @apollo/client
-- use useQuery hook to fetch data
-- use mapbox-gl.js to create a map by creating an account and getting an access token
-- change styles to maximize the map size to the whole screen
-- track user current location by using GeolocateControl from mapbox-gl.js
-- install sass by using npm install sass and establish a module.scss file to style the app
-- install react-hook-form by using npm install react-hook-form to create a form and use the useForm hook to manage the form state of the search bar
-- use @toolpad/core to create a dashboard but suspended it because of conflicts with material ui components imports
-- use @mui/material to create a drawer
-- use @mui/material to create a list of cards
+- Create react app with typescript template by using npx create-react-app [app-name] --template typescript
+
+- Install apollo client by using npm install @apollo/client graphql
+
+- Setup apollo client by using ApolloProvider in index.tsx
+
+- Create graphql query by using gql from @apollo/client
+
+- Use useQuery hook to fetch data
+
+- Use mapbox-gl.js to create a map by creating an account and getting an access token
+
+- Change styles to maximize the map size to the whole screen
+
+- Track user current location by using GeolocateControl from mapbox-gl.js
+
+- Install sass by using npm install sass and establish a module.scss file to style the app
+
+- Install react-hook-form by using npm install react-hook-form to create a form and use the useForm hook to manage the form state of the search bar
+
+- Use @toolpad/core to create a dashboard but suspended it because of conflicts with material ui components imports
+
+- Use @mui/material to create a drawer
+
+- Use @mui/material to create a list of cards
 
 - In the end to speed up the development process I migrated my project to a Toolpad template which has a dashboard layout out of the box and dark theme already implemented so that I can focus on the main functionality of the app.
 
