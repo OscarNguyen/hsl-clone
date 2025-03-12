@@ -209,10 +209,8 @@ const useMapBox = () => {
     mapRef.current.addControl(new mapboxgl.NavigationControl(), "top-right");
 
     mapRef.current?.on("load", () => {
-      if (mapRef.current) {
-        // loaded property is not reliable, so we need to use a custom property
-        mapRef.current.mapLoaded = true;
-      }
+      // loaded property is not reliable, so we need to use a custom property
+      mapRef.current!.mapLoaded = true;
     });
 
     // add click event to the map
@@ -271,7 +269,7 @@ const useMapBox = () => {
   }, [coordinates]);
 
   return {
-    mapLoaded: mapRef.current?.mapLoaded,
+    mapLoaded: () => mapRef.current?.mapLoaded,
     mapContainerRef,
     mapRef,
     coordinates,
